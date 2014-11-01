@@ -4,5 +4,5 @@
 #install influxdb (jpackage)
 #install hekad (jpackage)
 
-import update
+import test
 import deploy

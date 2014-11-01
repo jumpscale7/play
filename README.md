@@ -12,7 +12,7 @@ This should work on ubuntu 14.04+
 
 before using this repo install jumpscale in production mode 
 ```
-curl http://install.jumpscale.org:85/cmds/jsbox_stable.sh > /tmp/init.sh;sh /tmp/init.sh
+curl http://install.jumpscale.org:85/cmds/jsbox_unstable.sh > /tmp/init.sh;sh /tmp/init.sh
 source /opt/jsbox/activate
 ```
 
@@ -38,12 +38,12 @@ download this repo
 ```
 mkdir -p /code/github/jumpscale
 cd /code/github/jumpscale
-git clone https://yourname:yourpasswd@github.com/Jumpscale/play.git
+git clone https://github.com/Jumpscale/play.git
 ```
 
 install docker & jumpscale docker tools through jumpscale jpackages (make sure you are in the sandbox)
 ```
-jpackage install -n jsdocker
+jpackage install -n docker
 ```
 
 now go in eather of the sub directories of this repo & check the readme.md for further instructions
