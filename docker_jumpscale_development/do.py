@@ -55,7 +55,7 @@ def js():
     j.tools.docker.commit("master","mybase_js")
 
 
-
+#update()
 base()
 js()
 
