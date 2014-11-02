@@ -16,7 +16,7 @@ def docker_create_machine(reset=False):
     if reset or not redis.exists("play:docker:%s"%name):
         ports="8086:8086 8083:8083 28017:28017 27017:27017 5544:5544 82:82"
         vols="/opt/jumpscale/var/influxdb:/var/mydocker/influxdb # /opt/jumpscale/var/mongodb:/var/mydocker/mongodb"
-        port=j.tools.docker.create(name=master, ports=ports, vols=vols, volsro='', stdout=True, base='despiegk/mc', nameserver='8.8.8.8', \
+        port=j.tools.docker.create(name=name, ports=ports, vols=vols, volsro='', stdout=True, base='despiegk/mc', nameserver='8.8.8.8', \
             replace=True, cpu=None, mem=0)
         redis.set("play:docker:%s"%name,str(port))
     return int(redis.get("play:docker:%s"%name))
