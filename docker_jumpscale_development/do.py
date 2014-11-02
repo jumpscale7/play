@@ -9,9 +9,6 @@ import JumpScale.baselib.redis
 
 redis=j.clients.redis.getRedisClient("localhost",9999)
 
-#check if secret key is already known
-    import config
-
 secret=redis.get("ms1:secret")
 
 def docker_create_machine(reset=False):

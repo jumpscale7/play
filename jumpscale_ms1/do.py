@@ -55,7 +55,7 @@ def getjumpscale_play_env():
         ssh.run("cd /opt/code/github/jumpscale;git clone https://github.com/Jumpscale/play.git")
 
 def runplay(category,cmd):
-    ssh.run("cd /opt/code/github/jumpscale/%s;python %s.py"%(category,cmd))
+    ssh.run("cd /opt/code/github/jumpscale/play/%s;python %s.py"%(category,cmd))
 
 
 #base()
