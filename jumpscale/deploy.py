@@ -16,7 +16,7 @@ def base():
     env.warn_only=False
     run("apt-get upgrade -y")
     run("apt-get install mc python-git git ssh python2.7 python-requests python-apt openssl ca-certificates python-pip ipython -y")
-    run("apt-get install byobu tmux libmhash2 -y")
+    run("apt-get install byobu tmux libmhash2 libpython-all-dev python-redis python-hiredis -y")
 
 @task
 def js():
