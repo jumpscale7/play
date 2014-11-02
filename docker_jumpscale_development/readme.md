@@ -11,10 +11,9 @@ docker login
 ```
 
 see
-[do.sh](do.sh) for how to use
+[do.py](do.py) for how to use
+Its an easy to change script
 
-just execute this bash file and 2 docker local images will be the result
-as well as an up and running docker machine which you can use to play with
 
 do
 ```
@@ -39,17 +38,3 @@ jsdocker new -n mydocker --ports "7766:9766"
 
 #to login
 ssh localhost -p 9022
-
-#to use fab, passwd does not have to be specified
-fab test.hostname -H localhost:9022
-```
-
-example fab usage
------------------
-```
-fab deploy.installjs -p rooter -H localhost
-fab -l #lists the different available commands
-
--p = passwd
--H = ipaddr
-```

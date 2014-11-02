@@ -34,6 +34,9 @@ def base():
     ssh.run("apt-get install mc python-git git ssh python2.7 python-requests python-apt openssl ca-certificates python-pip ipython -y")
     ssh.run("apt-get install byobu tmux libmhash2 libpython-all-dev python-redis python-hiredis -y")
 
+    ssh.run("git config --global user.email \"you@example.com\"")
+    ssh.run("git config --global user.name \"Your Name\"")
+
 #INSTALL JUMPSCALE
 def js():
     run("pip install https://github.com/Jumpscale/jumpscale_core/archive/master.zip")

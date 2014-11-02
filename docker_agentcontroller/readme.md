@@ -3,10 +3,10 @@ to get started:
 
 first you need to install the portal (see dir portal)
 
-then just execute do.sh
+then just execute python do.py
 
 see
-[do.sh](do.sh) for how to use
+[do.py](do.py) for how to use
 
 do
 ```

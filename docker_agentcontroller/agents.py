@@ -1,21 +1,18 @@
-#fabric install script (not using jumpscale)
 
 from JumpScale import j
-
 from fabric.api import *
 
+import JumpScale.baselib.remote.cuisine
 import JumpScale.lib.docker
 
-docker=j.tools.docker
 
-@task 
 def js():
     res={}
     
     agentcontrollerIp=docker.getIp("mydocker")
 
     for i in range(2):
-        res[i]=docker.create(name="agent_%s"%i,stdout=True,base="ubuntu_js",ports="",vols="/opt/code:/opt/code",volsro="")
+        res[i]=j.tools.docker.create(name="agent_%s"%i,stdout=True,base="mybase_js",ports="",vols="/opt/code:/opt/code",volsro="")
         agentOn1Node(res[i],agentcontrollerIp)
     
 
