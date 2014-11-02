@@ -22,6 +22,7 @@ def docker_create_machine(reset=False):
     return int(redis.get("play:docker:%s"%name))
 
 port=docker_create_machine()
+print port
 ssh=j.remote.cuisine.connect("localhost",port)
 #check all commands available on ssh.  (there are lots of)
 
@@ -31,8 +32,13 @@ def update():
 
 #INSTALL BASE ENVIRONMENT
 def base():
+    from IPython import embed
+    print "DEBUG NOW ooo"
+    embed()
+    
+    ssh=j.remote.cuisine.connect("localhost",port)
     env.warn_only=True
-    run("apt-get update")
+    ssh.run("apt-get update")
     env.warn_only=False
     ssh.run("apt-get upgrade -y")
     ssh.run("apt-get install mc python-git git ssh python2.7 python-requests python-apt openssl ca-certificates python-pip ipython -y")
