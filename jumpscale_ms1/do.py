@@ -13,14 +13,14 @@ redis=j.clients.redis.getRedisClient("localhost",9999)
 #check if redis has secret key for ms1, if not ask it
 if not redis.exists("ms1:secret") or redis.get("ms1:secret")=="":
     import config
+secret=redis.get("ms1:secret")
 
 #check if we have already configured a machine if not do it now
-secret=redis.get("ms1:secret")
 if not redis.exists("ms1:currentmachine"):
     import getmachine
-
 addr,port=redis.get("ms1:currentmachine").split(",")
 
+#create connection to the just created machine on ms1
 ssh=j.remote.cuisine.connect(addr,port)
 
 #check all commands available on ssh.  (there are lots of)
@@ -37,7 +37,7 @@ def base():
     ssh.run("git config --global user.email \"you@example.com\"")
     ssh.run("git config --global user.name \"Your Name\"")
 
-#INSTALL JUMPSCALE
+#INSTALL JUMPSCALE in ms1 vm
 def js():
     run("pip install https://github.com/Jumpscale/jumpscale_core/archive/master.zip")
     ssh.run("jpackage mdupdate")
@@ -45,11 +45,12 @@ def js():
     ssh.run("jpackage install -n core -r --debug")
     ssh.run("jpackage install -n libs -r --debug")
 
+#install docker in ms1 vm
 def docker():
     ssh.run("jpackage install -n docker -r")
     ssh.run("jsdocker pull -b despiegk/mc")
 
-#get environment to play with lots of example environments in jumpscale
+#get ms1 vm to play with lots of example environments in jumpscale
 def getjumpscale_play_env():    
     if ssh.dir_exists("/opt/code/github/jumpscale/play"):
         ssh.run("cd /opt/code/github/jumpscale/play;git pull")    
@@ -57,17 +58,29 @@ def getjumpscale_play_env():
         ssh.run("mkdir -p /opt/code/github/jumpscale")
         ssh.run("cd /opt/code/github/jumpscale;git clone https://github.com/Jumpscale/play.git")
 
+#execute inside the docker
 def runplay(category,cmd):
     ssh.run("cd /opt/code/github/jumpscale/play/%s;python %s.py"%(category,cmd))
 
 
-#base()
-#js()
-#docker()
+base()
+js()
+docker()
 getjumpscale_play_env()
+
+#goal of next is to have a docker deployed ontop of ms1 vm
+#inside the docker inside the MS1 machine a full portal should be running
 runplay("docker_jumpscale_development","do")
-# runplay("portal","do")
 
+#on same docker in ms1 machine agentcontroller will be installed
+runplay("docker_agentcontroller","do")
 
+#create x new docker machines which will be agents to previously configured agentcontroller
+runplay("docker_agentcontroller","agents")
+
+#the result of all of this should be 
+## running portal & agent controller in docker on ms1 vm
+## 2 running dockers being agents connected to agentcontroller
+## on grid portal all can be looked at
 
 
