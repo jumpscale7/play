@@ -6,11 +6,12 @@ import JumpScale.baselib.remote.cuisine
 import JumpScale.lib.docker
 
 
-def js():
+def dockers():
     res={}
     
-    agentcontrollerIp=docker.getIp("mydocker")
+    agentcontrollerIp=docker.getIp("master")
 
+    #create agent docker machines starting from the mybase_js basis
     for i in range(2):
         res[i]=j.tools.docker.create(name="agent_%s"%i,stdout=True,base="mybase_js",ports="",vols="/opt/code:/opt/code",volsro="")
         agentOn1Node(res[i],agentcontrollerIp)
@@ -19,7 +20,7 @@ def js():
 def agentOn1Node(sshport,agentcontrollerIp):
     """
     """
-
+    ssh=j.remote.cuisine.connect("localhost",sshport)
     cmd="""
 jpackage install -n jsagent -i main --data="\
 ac.ipaddress=$ip #\
@@ -34,7 +35,7 @@ agentcontroller.webdiskey=1234 #\
 grid.node.roles=grid.master,agentcontroller"
 """
     cmd=cmd.replace("$ip",str(agentcontrollerIp))
-    run(cmd)
+    ssh.run(cmd)
 
 
 
