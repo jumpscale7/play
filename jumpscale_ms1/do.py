@@ -1,4 +1,5 @@
-
+#execute this script from a machine which has jumpscale in development mode
+#make sure libraries are installed (jpackage install -n libs)
 from JumpScale import j
 from fabric.api import *
 import JumpScale.baselib.redis
