@@ -6,13 +6,12 @@ Each subdir will create a full environment with
 
 install on mothership1 (recommended)
 ------------------------------------
-see $play/jumpscale_ms1/ directory
-make sure you install jupmpscale in development mode first
-install libs
-look at do.py page
-execute by using python do.py
-
-its a script which automatically configures on MS1 a full JS environment in development mode.
+* see $play/jumpscale_ms1/ directory
+* make sure you install jupmpscale in development mode first
+* install libs
+* look at do.py page
+* execute by using python do.py
+* its a script which automatically configures on MS1 a full JS environment in development mode.
 
 manual install on ubuntu (BROKEN FOR NOW, use mothership1 example)
 ------------------------------------------------------------------
