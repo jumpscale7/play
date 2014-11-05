@@ -25,6 +25,31 @@ def docker_create_machine(reset=False,image='despiegk/mc'):
     return int(redis.get(key))
 
 def update():
+    run("""
+        pip uninstall JumpScale-core
+killall tmux  #dangerous
+killall redis-server
+rm -rf /usr/local/lib/python2.7/dist-packages/jumpscale*
+rm -rf /usr/local/lib/python2.7/site-packages/jumpscale*
+rm -rf /usr/local/lib/python2.7/dist-packages/JumpScale*
+rm -rf /usr/local/lib/python2.7/site-packages/JumpScale*
+rm -rf /usr/local/lib/python2.7/site-packages/JumpScale/
+rm -rf /usr/local/lib/python2.7/site-packages/jumpscale/
+rm -rf /usr/local/lib/python2.7/dist-packages/JumpScale/
+rm -rf /usr/local/lib/python2.7/dist-packages/jumpscale/
+rm -rf /opt/jumpscale
+rm /usr/local/bin/js*
+rm /usr/local/bin/jpack*
+killall python
+rm -rf /opt/sentry/
+sudo stop redisac
+sudo stop redisp
+sudo stop redism
+sudo stop redisc
+killall redis-server
+rm -rf /opt/redis/
+        """)
+    run("pip install https://github.com/Jumpscale/jumpscale_core/archive/master.zip")
     ssh.run("jpackage mdupdate")
     ssh.run("cd /opt/code/github/jumpscale/jumpscale_core/;git pull")
 
@@ -41,8 +66,6 @@ def base():
 
 #INSTALL JUMPSCALE
 def js():
-    run("pip install https://github.com/Jumpscale/jumpscale_core/archive/master.zip")
-    ssh.run("jpackage mdupdate")
     ssh.run("jpackage install -n base -r")
     ssh.run("jpackage install -n core -r --debug")
     ssh.run("jpackage install -n libs -r --debug")

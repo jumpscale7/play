@@ -19,6 +19,7 @@ secret=redis.get("ms1:secret")
 #check if we have already configured a machine if not do it now
 if not redis.exists("ms1:currentmachine"):
     import getmachine
+    getmachine.main()
 addr,port=redis.get("ms1:currentmachine").split(",")
 
 #create connection to the just created machine on ms1
@@ -31,8 +32,10 @@ def base():
     env.warn_only=True
     run("apt-get update")
     env.warn_only=False
-    ssh.run("apt-get upgrade -y")
-    ssh.run("apt-get install mc python-git git ssh python2.7 python-requests python-apt openssl ca-certificates python-pip ipython -y")
+    # ssh.run("apt-get upgrade -y")
+    ssh.run("apt-get install mc python-git git ssh python2.7 python-requests python-apt openssl ca-certificates ipython -y")
+    ssh.run("wget https://raw.github.com/pypa/pip/master/contrib/get-pip.py")
+    ssh.run("python get-pip.py")
     ssh.run("apt-get install byobu tmux libmhash2 libpython-all-dev python-redis python-hiredis -y")
 
     ssh.run("git config --global user.email \"you@example.com\"")
@@ -40,6 +43,30 @@ def base():
 
 #INSTALL JUMPSCALE in ms1 vm
 def js():
+    run("""
+        pip uninstall JumpScale-core
+killall tmux  #dangerous
+killall redis-server
+rm -rf /usr/local/lib/python2.7/dist-packages/jumpscale*
+rm -rf /usr/local/lib/python2.7/site-packages/jumpscale*
+rm -rf /usr/local/lib/python2.7/dist-packages/JumpScale*
+rm -rf /usr/local/lib/python2.7/site-packages/JumpScale*
+rm -rf /usr/local/lib/python2.7/site-packages/JumpScale/
+rm -rf /usr/local/lib/python2.7/site-packages/jumpscale/
+rm -rf /usr/local/lib/python2.7/dist-packages/JumpScale/
+rm -rf /usr/local/lib/python2.7/dist-packages/jumpscale/
+rm -rf /opt/jumpscale
+rm /usr/local/bin/js*
+rm /usr/local/bin/jpack*
+killall python
+rm -rf /opt/sentry/
+sudo stop redisac
+sudo stop redisp
+sudo stop redism
+sudo stop redisc
+killall redis-server
+rm -rf /opt/redis/
+        """)
     run("pip install https://github.com/Jumpscale/jumpscale_core/archive/master.zip")
     ssh.run("jpackage mdupdate")
     ssh.run("jpackage install -n base -r")
