@@ -188,8 +188,8 @@ port=docker_create_machine(False)
 ssh=j.remote.cuisine.connect("localhost",port)
 #check all commands available on ssh.  (there are lots of)
 
-update()
 base()
+update()
 js()
 
 # port=docker_create_machine(False,"mybase_js")
