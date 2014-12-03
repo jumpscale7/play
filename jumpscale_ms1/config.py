@@ -7,7 +7,7 @@ import JumpScale.lib.ms1
 import JumpScale.baselib.redis
 redis=j.clients.redis.getRedisClient("localhost",9999)
 
-secret=j.tools.ms1.getClouspaceSecret(\
+secret=j.tools.ms1.getCloudspaceSecret(\
             login=j.console.askString("ms1 login"),\
             password=j.console.askString("ms1 passwd"), \
             cloudspace_name=j.console.askString("cloudspace name",defaultparam="default"),\
